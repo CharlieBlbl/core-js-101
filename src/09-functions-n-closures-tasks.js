@@ -24,7 +24,7 @@
  *
  */
 function getComposition(f, g) {
-  return function (x) {
+  return function a(x) {
     return f(g(x));
   };
 }
@@ -47,7 +47,7 @@ function getComposition(f, g) {
  *
  */
 function getPowerFunction(exponent) {
-  return function (x) {
+  return function b(x) {
     return x ** exponent;
   };
 }
@@ -68,7 +68,7 @@ function getPowerFunction(exponent) {
  */
 function getPolynom(...args) {
   const n = args.length;
-  return function (х) {
+  return function c(х) {
     if (n === 3) {
       return args[0] * х ** 2 + args[1] * х + args[2];
     }
@@ -99,7 +99,7 @@ function getPolynom(...args) {
  */
 function memoize(func) {
   const x = func();
-  return function () {
+  return function d() {
     return x;
   };
 }
@@ -121,7 +121,7 @@ function memoize(func) {
  * retryer() => 2
  */
 function retry(func, attempts) {
-  return function () {
+  return function f() {
     for (let i = 0; i <= attempts; i = +1) {
       try {
         return func();
