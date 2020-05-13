@@ -426,8 +426,14 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const splitStrings = (a, sep = '/') => a.map((i) => i.split(sep));
+  const elAt = (i) => (a) => a[i];
+  const rotate = (a) => a[0].map((e, i) => a.map(elAt(i)));
+  const allElementsEqual = (arr) => arr.every((e) => e === arr[0]);
+  const commonPath = (input, sep = '/') => [...rotate(splitStrings(input, sep)), ['']]
+    .filter(allElementsEqual).map(elAt(0)).join(sep);
+  return commonPath(pathes);
 }
 
 
@@ -449,8 +455,26 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(A, B) {
+  const rowsA = A.length;
+  const colsA = A[0].length;
+  const rowsB = B.length;
+  const colsB = B[0].length;
+  const C = [];
+
+  if (colsA !== rowsB) return false;
+
+  for (let i = 0; i < rowsA; i += 1) C[i] = [];
+
+  for (let k = 0; k < colsB; k += 1) {
+    for (let i = 0; i < rowsA; i += 1) {
+      let temp = 0;
+      for (let j = 0; j < rowsB; j += 1) temp += A[i][j] * B[j][k];
+      C[i][k] = temp;
+    }
+  }
+
+  return C;
 }
 
 
@@ -484,107 +508,45 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
-  // let res;
-  // const winLines = [
-  //   [1, 2, 3],
-  //   [4, 5, 6],
-  //   [7, 8, 9],
-  //   [1, 4, 7],
-  //   [2, 5, 8],
-  //   [3, 6, 9],
-  //   [1, 5, 9],
-  //   [3, 5, 7],
-  // ];
-  // const ob1 = [];
-  // const ob2 = [];
+function evaluateTicTacToePosition(position) {
+  // throw new Error('Not implemented');
+  let res;
+  const winLines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  const ob1 = [];
+  const ob2 = [];
+  for (let i = 0; i < position.length; i += 1) {
+    for (let j = 0; j < position[i].length; j += 1) {
+      if (position[i][j] === 'X') {
+        ob1.push(3 * i + j);
+      }
+      if (position[i][j] === '0') {
+        ob2.push(3 * i + j);
+      }
+    }
+  }
+  if (ob1.length <= 2 && ob2.length <= 2) {
+    return res;
+  }
 
-  // console.log(position);
-  // position.forEach((el, index) => {
-  //   if (index === 0) {
-  //     if (el[0] === 'X') {
-  //       console.log(el[0]);
-  //       ob1.push(1);
-  //     }
-  //     if (el[1] === 'X') {
-  //       ob1.push(2);
-  //     }
-  //     if (el[2] === 'X') {
-  //       ob1.push(3);
-  //     }
-  //   }
-  //   if (index === 1) {
-  //     if (el[0] === 'X') {
-  //       ob1.push(4);
-  //     }
-  //     if (el[1] === 'X') {
-  //       ob1.push(5);
-  //     }
-  //     if (el[2] === 'X') {
-  //       ob1.push(6);
-  //     }
-  //   }
-  //   if (index === 2) {
-  //     if (el[0] === 'X') {
-  //       ob1.push(7);
-  //     }
-  //     if (el[1] === 'X') {
-  //       ob1.push(8);
-  //     }
-  //     if (el[2] === 'X') {
-  //       ob1.push(9);
-  //     }
-  //   }
-  // });
-  // position.forEach((el, index) => {
-  //   if (index === 0) {
-  //     if (el[0] === '0') {
-  //       ob2.push(1);
-  //     }
-  //     if (el[1] === '0') {
-  //       ob2.push(2);
-  //     }
-  //     if (el[2] === '0') {
-  //       ob2.push(3);
-  //     }
-  //   }
-  //   if (index === 1) {
-  //     if (el[0] === '0') {
-  //       ob2.push(4);
-  //     }
-  //     if (el[1] === '0') {
-  //       ob2.push(5);
-  //     }
-  //     if (el[2] === '0') {
-  //       ob2.push(6);
-  //     }
-  //   }
-  //   if (index === 2) {
-  //     if (el[0] === '0') {
-  //       ob2.push(7);
-  //     }
-  //     if (el[1] === '0') {
-  //       ob2.push(8);
-  //     }
-  //     if (el[2] === '0') {
-  //       ob2.push(9);
-  //     }
-  //   }
-  // });
-  // console.log(ob2);
-  // winLines.forEach((el) => {
-  //   if (el.join('') === ob1.join('')) {
-  //     console.log(ob1);
-  //     res = 'X';
-  //   }
-  //   if (el.join('') === ob2.join('')) {
-  //     console.log(ob2);
-  //     res = '0';
-  //   }
-  // });
+  winLines.forEach((el) => {
+    if (ob1.every((o) => el.includes(o)) || (ob1.filter((x) => x === el.find((y) => y === x))).join('') === el.join('')) {
+      res = 'X';
+    }
+    if (ob2.every((o) => el.includes(o)) || (ob2.filter((x) => x === el.find((y) => y === x))).join('') === el.join('')) {
+      res = '0';
+    }
+  });
 
-  // return res;
+  return res;
 }
 
 
